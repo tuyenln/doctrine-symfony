@@ -3,10 +3,11 @@
 // src/Document/Product.php
 namespace App\Document;
 
+use App\Repository\ProductRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass=ProductRepository::class)
  */
 class Product
 {

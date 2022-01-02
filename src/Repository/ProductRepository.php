@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+// use App\Entity\Product;
+use App\Document\Product;
+// use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+// use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
+use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Product[]    findAll()
  * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository
+class ProductRepository extends ServiceDocumentRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -47,4 +52,12 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrderedByName()
+    {
+        return $this->createQueryBuilder()
+            ->sort('name', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
 }
